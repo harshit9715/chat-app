@@ -14,8 +14,13 @@ app.use(express.static(publicDirPath))
 
 io.on('connection', (socket)=> {
 
-    console.log('new ws conn')
+    // console.log('new ws conn')
     socket.emit('message', 'welcome')
+
+    socket.on('sendMessage', (msg) => {
+        // console.log(msg)
+        io.emit('message', msg)
+    })
 })
 
 

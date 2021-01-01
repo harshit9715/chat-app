@@ -13,6 +13,16 @@
 
 <body>
     <h1>Chat App</h1>
+    <div>
+        <div class="chat-text-block">
+            <p id="msg-2"> </p>    
+            <p id="msg-1"> </p>
+        </div>
+        <form style="position: absolute; bottom: 40%;">
+            <input id="message" placeholder="Type a message">
+            <button id="sendMessage">Send</button>
+        </form>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chat.js"></script>
 </body>
