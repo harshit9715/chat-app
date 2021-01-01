@@ -12,17 +12,10 @@ const publicDirPath = path.join(__dirname,'../public')
 
 app.use(express.static(publicDirPath))
 
-let count = 0
 io.on('connection', (socket)=> {
 
     console.log('new ws conn')
-    socket.emit('countUpdated', count)
-
-    socket.on('increment', () => {
-        count++;
-        // socket.emit('countUpdated', count) // emits event to specific conn
-        io.emit('countUpdated', count) // emits event to every connection
-    })
+    socket.emit('message', 'welcome')
 })
 
 
