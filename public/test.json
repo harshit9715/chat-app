@@ -1,0 +1,1091 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TaskManager",
+        "description": "NodeJS express backend for a simple task app that remember your todos.",
+        "contact": {},
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "variables": {}
+        }
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register",
+                "description": "Creates a new user",
+                "operationId": "Register",
+                "parameters": [],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            },
+                            "examples": {
+                                "example": {
+                                    "value": {
+                                        "name": "Harshit",
+                                        "age": 23,
+                                        "password": "MightyCat",
+                                        "email": "harshit9715@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserAuth200"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmptyObject"
+                                },
+                                "example": {}
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "security": []
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login",
+                "description": "Login a user with email and password",
+                "operationId": "Login",
+                "parameters": [],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            },
+                            "examples": {
+                                "example": {
+                                    "value": {
+                                        "email": "harshit9715@gmail.com",
+                                        "password": "MightyCat"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserAuth200"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EmptyObject"
+                                },
+                                "example": {}
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "security": []
+            }
+        },
+        "/users/me": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get Profile",
+                "description": "Get current user's profile.",
+                "operationId": "GetProfile",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update Profile",
+                "description": "Update user profile details.",
+                "operationId": "UpdateProfile",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Atleast one property is required",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BadRequestUser"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete Account",
+                "description": "Delete user's account and profile and remove all created Tasks.",
+                "operationId": "DeleteAccount",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/users/me/avatar": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Upload Profile Picture",
+                "description": "Upload profile picture as multi-part formdata",
+                "operationId": "UploadProfilePicture",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "avatar"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "headers": {}
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete Profile Picture",
+                "description": "Delete user's profile picture.",
+                "operationId": "DeleteProfilePicture",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "headers": {}
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/users/{id}/avatar": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get Profile Picture",
+                "description": "Get user's profile picture.",
+                "operationId": "GetProfilePicture",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User Id",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "content": {
+                            "image/png": {
+                                "schema": {
+                                    "title": "Image Schema",
+                                    "type": "object",
+                                    "properties": {
+                                        "file": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "headers": {}
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Logout",
+                "description": "Logout the user from the application",
+                "operationId": "Logout",
+                "parameters": [],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LogoutRequest"
+                            },
+                            "examples": {
+                                "example": {
+                                    "value": {
+                                        "global": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tasks": {
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "New Task",
+                "description": "Create a new Task",
+                "operationId": "NewTask",
+                "parameters": [],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewTaskRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResponse200"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "List Tasks",
+                "description": "List all Tasks",
+                "operationId": "ListTasks",
+                "parameters": [
+                    {
+                        "name": "completed",
+                        "in": "query",
+                        "description": "Get only completed or incomplete tasks",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Use limit to limit the number of results (use with skip for pagination)",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 50
+                        }
+                    },
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "description": "Use for skipping some results (use with limit for pagination)",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "orderBy",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "createdAt:asc",
+                                "createdAt:desc",
+                                "updatedAt:asc",
+                                "updatedAt:desc",
+                                "completed:asc",
+                                "completed:desc"
+                            ]
+                        },
+                        "description": "Sort order:  * `createdAt:asc` - Ascending, from oldest to earliest by created time\n  * `createdAt:desc` - Descending, from earliest to oldest by created time\n  * `updatedAt:asc` - Ascending, from oldest to earliest by updated time\n  * `updatedAt:desc` - Descending, from earliest to oldest by updated time\n  * `completed:asc` - First completed then incomplete\n  * `completed:desc` - First incomplete then completed\n"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TaskResponse200"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get Task by ID",
+                "description": "Get Task by ID",
+                "operationId": "GetTaskbyID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResponse200"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "put": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Update Task by ID",
+                "description": "Update Task by ID",
+                "operationId": "UpdateTaskbyID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTaskbyIDRequest"
+                            },
+                            "examples": {
+                                "example": {
+                                    "value": {
+                                        "description": "wash cloths",
+                                        "completed": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResponse200"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BadRequestTask"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete Task by ID",
+                "description": "Delete Task by ID",
+                "operationId": "DeleteTaskbyID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResponse200"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "headers": {},
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "headers": {}
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Unauthorized": {
+                "title": "User not authorized",
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "error": "Please authenticate."
+                        }
+                    }
+                }
+            },
+            "BadRequest": {
+                "title": "Bad Request properties",
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "properties": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            },
+                            "path": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "kind": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BadRequestTask": {
+                "title": "Bad Request",
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "object",
+                        "properties": {
+                            "description": {
+                                "$ref": "#/components/schemas/BadRequest"
+                            },
+                            "completed": {
+                                "$ref": "#/components/schemas/BadRequest"
+                            }
+                        }
+                    }
+                },
+                "example": {
+                    "errors": {
+                        "description": {
+                            "name": "ValidatorError",
+                            "message": "Path `description` is required.",
+                            "properties": {
+                                "message": "Path `description` is required.",
+                                "type": "required",
+                                "path": "description"
+                            },
+                            "kind": "required",
+                            "path": "description"
+                        }
+                    },
+                    "_message": "Task validation failed",
+                    "message": "Task validation failed: description: Path `description` is required."
+                }
+            },
+            "BadRequestUser": {
+                "title": "Bad Request",
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "object",
+                        "properties": {
+                            "password": {
+                                "$ref": "#/components/schemas/BadRequest"
+                            },
+                            "email": {
+                                "$ref": "#/components/schemas/BadRequest"
+                            }
+                        }
+                    }
+                },
+                "example": {
+                    "errors": {
+                        "password": {
+                            "name": "ValidatorError",
+                            "message": "Path `password` (`Cat`) is shorter than the minimum allowed length (7).",
+                            "properties": {
+                                "message": "Path `password` (`Cat`) is shorter than the minimum allowed length\n(7).",
+                                "type": "minlength",
+                                "minlength": 7,
+                                "path": "password",
+                                "value": "Cat"
+                            },
+                            "kind": "minlength",
+                            "path": "password",
+                            "value": "Cat"
+                        }
+                    },
+                    "_message": "User validation failed",
+                    "message": "User validation failed: password: Path `password` (`Cat`) is shorter than\nthe minimum allowed length (7)."
+                }
+            },
+            "EmptyObject": {
+                "title": "EmptyObject"
+            },
+            "RegisterRequest": {
+                "title": "RegisterRequest",
+                "required": [
+                    "name",
+                    "password",
+                    "email"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 6
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "name": "Harshit",
+                            "age": 23,
+                            "password": "MightyCat",
+                            "email": "harshit9715@gmail.com"
+                        }
+                    }
+                }
+            },
+            "LoginRequest": {
+                "title": "LoginRequest",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 6
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "email": "harshit9715@gmail.com",
+                            "password": "MightyCat"
+                        }
+                    }
+                }
+            },
+            "User": {
+                "title": "UserObject",
+                "type": "object",
+                "properties": {
+                    "age": {
+                        "type": "integer"
+                    },
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": true,
+                "example": {
+                    "age": 23,
+                    "_id": "5fedc909949632fd5cc0c8d9",
+                    "name": "Harshit",
+                    "email": "harshit9715@gmail.com",
+                    "createdAt": "2020-12-31T12:50:17.393Z",
+                    "updatedAt": "2020-12-31T12:50:17.457Z"
+                }
+            },
+            "UserAuth200": {
+                "title": "LoginResponse",
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "user": {
+                        "age": 23,
+                        "_id": "5fedc909949632fd5cc0c8d9",
+                        "name": "Harshit",
+                        "email": "harshit9715@gmail.com",
+                        "createdAt": "2020-12-31T12:50:17.393Z",
+                        "updatedAt": "2020-12-31T12:50:17.457Z"
+                    },
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmVkYzkwOTk0OTYzMmZkNWNjMGM4ZDkiLCJpYXQiOjE2MDk0MTkwMTd9.krWt2xM8sTVPgiuHXvVCirj7f954vA3AKr-RyQNEkaI"
+                }
+            },
+            "UpdateProfileRequest": {
+                "title": "UpdateProfileRequest",
+                "minProperties": 1,
+                "type": "object",
+                "properties": {
+                    "age": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 6
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "age": 22,
+                            "name": "Harshit Gupta"
+                        }
+                    }
+                }
+            },
+            "LogoutRequest": {
+                "title": "LogoutRequest",
+                "required": [
+                    "global"
+                ],
+                "type": "object",
+                "properties": {
+                    "global": {
+                        "type": "boolean"
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "global": false
+                        }
+                    }
+                }
+            },
+            "TaskResponse200": {
+                "title": "New Task Response 200",
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "owner": {
+                        "type": "string"
+                    },
+                    "completed": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "example": {
+                    "completed": false,
+                    "_id": "5fedd79c949632fd5cc0c8de",
+                    "description": "Wash cloths",
+                    "owner": "5fedc909949632fd5cc0c8d9",
+                    "createdAt": "2020-12-31T13:52:28.329Z",
+                    "updatedAt": "2020-12-31T13:52:28.329Z"
+                }
+            },
+            "NewTaskRequest": {
+                "title": "NewTaskRequest",
+                "required": [
+                    "description"
+                ],
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "completed": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "description": "Wash cloths"
+                        }
+                    }
+                }
+            },
+            "UpdateTaskbyIDRequest": {
+                "title": "UpdateTaskbyIDRequest",
+                "required": [
+                    "description",
+                    "completed"
+                ],
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "completed": {
+                        "type": "boolean"
+                    }
+                },
+                "examples": {
+                    "example": {
+                        "value": {
+                            "description": "wash cloths again",
+                            "completed": false
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "httpBearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "httpBearer": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Users",
+            "description": "User account management related APIs"
+        },
+        {
+            "name": "Tasks",
+            "description": "Task related APIs."
+        }
+    ]
+}
