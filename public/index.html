@@ -13,17 +13,31 @@
 
 <body>
     <h1>Chat App</h1>
+    <div id="messages"></div>
     <div>
-        <div class="chat-text-block">
-            <p id="msg-2"> </p>    
-            <p id="msg-1"> </p>
-        </div>
-        <form style="position: absolute; bottom: 40%;">
-            <input id="message" placeholder="Type a message">
+        <form id="msg-form">
+            <input name="message" placeholder="Type a message">
             <button id="sendMessage">Send</button>
         </form>
+        <button id="sendLocation">Send Location</button>
     </div>
+
+    <script id="message-template" type="text/html">
+        <div>
+            <p>{{message}}</p>
+        </div>
+    </script>
+
+    <script id="location-template" type="text/html">
+        <div>
+            <p><a href={{url}} target="_blank">My current location</a></p>
+        </div>
+    </script>
+
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
     <script src="/js/chat.js"></script>
 </body>
 
